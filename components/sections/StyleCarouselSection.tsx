@@ -6,58 +6,98 @@ import { EffectCoverflow, Mousewheel } from "swiper/modules";
 
 const STYLES = [
   {
-    name: "Crimson Noise",
-    label: "Rouge vibrant, brutalist, typé portfolio créatif.",
+    nameEn: "Crimson Noise",
+    nameFr: "Crimson Noise",
+    labelEn: "Vibrant red, bold and creative-portfolio oriented.",
+    labelFr: "Rouge vibrant, brut, taillé pour un portfolio créatif.",
     base: "#FF4B5C",
   },
   {
-    name: "Sunrise Glow",
-    label: "Orange doux, chaleureux, très friendly.",
+    nameEn: "Sunrise Glow",
+    nameFr: "Sunrise Glow",
+    labelEn: "Soft orange, warm and friendly for accessible brands.",
+    labelFr: "Orange doux, chaleureux et friendly pour des marques accessibles.",
     base: "#FF9F1C",
   },
   {
-    name: "Solar Bloom",
-    label: "Jaune lumineux, pour des marques optimistes.",
+    nameEn: "Solar Bloom",
+    nameFr: "Solar Bloom",
+    labelEn: "Bright yellow for optimistic, energetic products.",
+    labelFr: "Jaune lumineux, parfait pour des produits optimistes et énergiques.",
     base: "#FFD60A",
   },
   {
-    name: "Matcha Studio",
-    label: "Vert calme, très “studio design / bien-être”.",
+    nameEn: "Matcha Studio",
+    nameFr: "Matcha Studio",
+    labelEn: "Calm green, studio / wellness and editorial vibes.",
+    labelFr: "Vert calme, ambiance studio / bien-être très éditoriale.",
     base: "#2EC4B6",
   },
   {
-    name: "Skyline UI",
-    label: "Bleu clair, tech propre et précise.",
+    nameEn: "Skyline UI",
+    nameFr: "Skyline UI",
+    labelEn: "Clean light blue, precise and product-focused.",
+    labelFr: "Bleu clair, propre et précis, orienté produit.",
     base: "#3A86FF",
   },
   {
-    name: "Indigo Frame",
-    label: "Indigo profond, sérieux mais moderne.",
+    nameEn: "Indigo Frame",
+    nameFr: "Indigo Frame",
+    labelEn: "Deep indigo, modern but serious.",
+    labelFr: "Indigo profond, moderne mais sérieux.",
     base: "#4B5DFF",
   },
   {
-    name: "Violet Pulse",
-    label: "Violet expressif, pour interfaces plus artistiques.",
+    nameEn: "Violet Pulse",
+    nameFr: "Violet Pulse",
+    labelEn: "Expressive violet for more artistic interfaces.",
+    labelFr: "Violet expressif, pour des interfaces plus artistiques.",
     base: "#9B5DE5",
   },
   {
-    name: "Magenta Pop",
-    label: "Magenta punchy, très expérimental.",
+    nameEn: "Magenta Pop",
+    nameFr: "Magenta Pop",
+    labelEn: "Punchy magenta for experimental visual identities.",
+    labelFr: "Magenta punchy, idéal pour des identités visuelles expérimentales.",
     base: "#FF006E",
   },
   {
-    name: "Copper Grain",
-    label: "Cuivré / beige, très éditorial, magazine.",
+    nameEn: "Copper Grain",
+    nameFr: "Copper Grain",
+    labelEn: "Copper / beige with a magazine, editorial feel.",
+    labelFr: "Cuivré / beige, avec une vraie vibe magazine éditorial.",
     base: "#B86B43",
   },
   {
-    name: "Mono Grain",
-    label: "Gris/noir minimal, ultra sobre, typographie d’abord.",
+    nameEn: "Mono Grain",
+    nameFr: "Mono Grain",
+    labelEn: "Minimal greyscale, typography-first, ultra clean.",
+    labelFr: "Gris/noir minimal, typographie d’abord, ultra épuré.",
     base: "#111827",
   },
 ];
 
 export default function StyleCarouselSection() {
+  // TODO: brancher sur ta logique globale de langue plus tard
+  const lang: "en" | "fr" = "en";
+
+  const ui = {
+    en: {
+      kicker: "Style explorer",
+      title: "Choose your style",
+      subtitle: "Find the one that fits your product.",
+      badge: "Scroll / swipe",
+      styleLabelPrefix: "style",
+    },
+    fr: {
+      kicker: "Explorateur de styles",
+      title: "Choisissez votre style",
+      subtitle: "Trouvez celui qui correspond à votre produit.",
+      badge: "Scroll / swipe",
+      styleLabelPrefix: "style",
+    },
+  }[lang];
+
   return (
     <section aria-labelledby="style-title" className="relative">
       {/* Titre */}
@@ -69,15 +109,15 @@ export default function StyleCarouselSection() {
         className="space-y-4 text-center mb-10"
       >
         <p className="text-sm font-medium tracking-wide text-slate-500 uppercase">
-          Style explorer
+          {ui.kicker}
         </p>
         <h2
           id="style-title"
           className="text-3xl md:text-4xl font-semibold tracking-tight text-slate-900"
         >
-          Choose your style
+          {ui.title}
           <span className="block text-slate-500 text-lg mt-3 font-normal">
-            comme dans un rayon de pochettes bien rangées.
+            {ui.subtitle}
           </span>
         </h2>
       </motion.div>
@@ -101,16 +141,14 @@ export default function StyleCarouselSection() {
             centeredSlides
             loop
             grabCursor
-            // super important pour que le scroll vertical sur la section fasse slider
             mousewheel={{ forceToAxis: true, releaseOnEdges: true }}
             coverflowEffect={{
-              rotate: 40, // angle latéral
+              rotate: 40,
               stretch: 0,
-              depth: 200, // profondeur
+              depth: 200,
               modifier: 1,
               slideShadows: false,
             }}
-            // responsive
             breakpoints={{
               0: {
                 slidesPerView: 1.3,
@@ -128,7 +166,7 @@ export default function StyleCarouselSection() {
             className="style-coverflow-swiper"
           >
             {STYLES.map((style, index) => (
-              <SwiperSlide key={style.name}>
+              <SwiperSlide key={style.nameEn}>
                 <div className="flex h-[260px] sm:h-[300px] md:h-[340px] items-stretch justify-center">
                   <div
                     className="
@@ -148,22 +186,23 @@ export default function StyleCarouselSection() {
                   >
                     {/* overlay “plastique” */}
                     <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(255,255,255,0.25),transparent_40%,rgba(0,0,0,0.25))]" />
-
                     {/* contenu */}
                     <div className="relative flex-1 flex flex-col justify-between p-4 text-white">
                       <div className="space-y-1">
                         <p className="text-[11px] uppercase tracking-[0.16em] text-white/75">
-                          {index + 1 < 10 ? `0${index + 1}` : index + 1} — style
+                          {index + 1 < 10 ? `0${index + 1}` : index + 1} —{" "}
+                          {ui.styleLabelPrefix}
                         </p>
                         <h3 className="text-lg font-semibold leading-tight">
-                          {style.name}
+                          {lang === "en" ? style.nameEn : style.nameFr}
                         </h3>
-                        <p className="text-xs text-white/85">{style.label}</p>
+                        <p className="text-xs text-white/85">
+                          {lang === "en" ? style.labelEn : style.labelFr}
+                        </p>
                       </div>
-
                       <div className="flex items-center justify-between text-[11px] text-white/80">
                         <span className="rounded-full bg-white/15 px-2 py-1">
-                          Scroll / swipe
+                          {ui.badge}
                         </span>
                         <span className="flex items-center gap-1">
                           <span className="h-1 w-6 rounded-full bg-white/60" />
@@ -178,11 +217,6 @@ export default function StyleCarouselSection() {
           </Swiper>
         </motion.div>
       </motion.div>
-
-      <p className="mt-6 text-center text-xs text-slate-500">
-        Sur ordinateur : scroll sur la section ou clique-glisse. Sur mobile : swipe
-        pour faire défiler les pochettes.
-      </p>
     </section>
   );
 }

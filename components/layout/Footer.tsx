@@ -1,33 +1,25 @@
 import React from "react";
-
 type FooterProps = {
   className?: string;
   email?: string;
 };
-
 export default function Footer({
   className = "",
   email = "hello@votrenom.dev",
 }: FooterProps) {
   const year = new Date().getFullYear();
-
   const t = {
-    contactTitle: "Une question, une idée, un doute ?",
-    contactCTA: "m’écrire",
-    elsewhereTitle: "Ailleurs sur le web.",
+    contactTitle: "Un projet, une idée ? 💬",
+    contactCTA: "M’écrire",
+    elsewhereTitle: "Ailleurs sur le web 🌍",
     github: "GitHub",
     linkedin: "LinkedIn",
-    aboutTitle: "À propos (ou presque)",
-    aboutText: `Je ne suis ni un gourou du code, ni un ninja full-stack auto-proclamé.
-Je ne vends pas de miracle, je construis des expériences numériques soignées.
+    aboutTitle: "À propos 👋",
+    aboutText: `Ingénieur diplômé de CentraleSupélec, j’ai passé plusieurs années chez Alpine Cars à concevoir et développer des interfaces web.
 
-Je dessine des interfaces, j’écris du code, je peaufine des micro-interactions.
-C’est tout. Et c’est déjà beaucoup.
-
-Au grand dam de ma grand-mère : même diplômé, je ne suis clairement pas un “ingénieur en costard”, mais plutôt celui qui reste réveillé pour faire briller un dernier pixel.`,
+Aujourd’hui, je crée des sites modernes et efficaces, dans une grande variété de languages.`,
     rights: "Tous droits réservés.",
   };
-
   return (
     <footer
       data-site-footer
@@ -41,7 +33,6 @@ Au grand dam de ma grand-mère : même diplômé, je ne suis clairement pas un �
     >
       {/* Séparateur haut */}
       <div className="absolute top-0 left-5 right-5 h-px bg-black/10 rounded-full" />
-
       <div
         className="
           mx-auto max-w-6xl px-6 sm:px-10 lg:px-14
@@ -97,7 +88,6 @@ Au grand dam de ma grand-mère : même diplômé, je ne suis clairement pas un �
               </span>
             </a>
           </section>
-
           {/* 2️⃣ Ailleurs */}
           <section
             className="
@@ -144,7 +134,6 @@ Au grand dam de ma grand-mère : même diplômé, je ne suis clairement pas un �
               </a>
             </div>
           </section>
-
           {/* 3️⃣ About */}
           <section
             className="
@@ -165,7 +154,6 @@ Au grand dam de ma grand-mère : même diplômé, je ne suis clairement pas un �
             </p>
           </section>
         </div>
-
         {/* Bas de page */}
         <div className="mt-8 pt-2 w-full flex items-center justify-center text-center text-xs text-slate-600">
           © {year} votrenom.dev. {t.rights}

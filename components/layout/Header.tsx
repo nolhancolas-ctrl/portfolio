@@ -50,7 +50,7 @@ export default function Header() {
         "
       >
         <span className="font-semibold text-slate-900">
-          votrenom.dev
+          nolhan.dev
         </span>
         <a
           href="#contact"

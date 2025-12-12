@@ -1,31 +1,64 @@
 "use client";
-
 import { motion } from "framer-motion";
 
 const steps = [
   {
-    label: "Étape 01",
-    title: "Découverte & cadrage",
-    body: "On clarifie où vous voulez aller : objectifs, audience, contraintes, tonalité. Je pose beaucoup de questions, vous parlez beaucoup.",
+    id: 1,
+    icon: "🧭",
+    labelEn: "Step 01",
+    labelFr: "Étape 01",
+    titleEn: "Discover",
+    titleFr: "Découvrir",
+    bodyEn: "Goals • audience • context",
+    bodyFr: "Objectifs • audience • contexte",
   },
   {
-    label: "Étape 02",
-    title: "Direction visuelle & interactions",
-    body: "Je propose une direction : moodboard, maquettes clés, premiers mouvements. On valide ensemble l’intention avant d’écrire la moindre ligne de code.",
+    id: 2,
+    icon: "🎨",
+    labelEn: "Step 02",
+    labelFr: "Étape 02",
+    titleEn: "Visual direction",
+    titleFr: "Direction visuelle",
+    bodyEn: "Moodboard • UI • motion",
+    bodyFr: "Moodboard • UI • motion",
   },
   {
-    label: "Étape 03",
-    title: "Production & micro-détails",
-    body: "Intégration sur-mesure (Next.js / React), animations précises, performance et accessibilité. C’est là que le site prend vraiment vie.",
+    id: 3,
+    icon: "💻",
+    labelEn: "Step 03",
+    labelFr: "Étape 03",
+    titleEn: "Build",
+    titleFr: "Production",
+    bodyEn: "Code • animations • quality",
+    bodyFr: "Code • animations • qualité",
   },
   {
-    label: "Étape 04",
-    title: "Lancement & suivi",
-    body: "Mise en ligne, ajustements, conseils d’évolution. Je ne disparais pas une fois le bouton “Publier” cliqué.",
+    id: 4,
+    icon: "🚀",
+    labelEn: "Step 04",
+    labelFr: "Étape 04",
+    titleEn: "Launch",
+    titleFr: "Lancement",
+    bodyEn: "Online • tweaks • support",
+    bodyFr: "Mise en ligne • ajustements • support",
   },
 ];
 
 export default function ProcessSection() {
+  // TODO: brancher sur ta logique globale de langue
+  const lang: "en" | "fr" = "en";
+
+  const ui = {
+    en: {
+      kicker: "Process",
+      title: "A simple 4-step flow",
+    },
+    fr: {
+      kicker: "Process",
+      title: "Un parcours simple en 4 étapes",
+    },
+  }[lang];
+
   return (
     <section aria-labelledby="process-title">
       {/* Header */}
@@ -37,26 +70,28 @@ export default function ProcessSection() {
         className="space-y-4 text-center mb-10"
       >
         <p className="text-sm font-medium tracking-wide text-slate-500 uppercase">
-          Process
+          {ui.kicker}
         </p>
         <h2
           id="process-title"
           className="text-3xl md:text-4xl font-semibold tracking-tight text-slate-900"
         >
-          Une méthode simple,
-          <span className="block text-slate-500 text-lg mt-3 font-normal">
-            mais obsédée par le détail.
-          </span>
+          {ui.title}
         </h2>
       </motion.div>
 
       {/* Timeline */}
-      <ol className="relative max-w-3xl mx-auto pl-5 border-l border-slate-200 space-y-8">
+      <ol
+        className="
+          relative
+          max-w-3xl mx-auto pl-5 border-l border-slate-200 space-y-8
+          md:max-w-4xl md:grid md:grid-cols-2 md:gap-6 md:space-y-0
+        "
+      >
         <div className="pointer-events-none absolute left-0 top-0 h-full w-px bg-gradient-to-b from-violet-500/60 via-fuchsia-500/40 to-amber-400/50" />
-
-        {steps.map((step, index) => (
+        {steps.map((step) => (
           <motion.li
-            key={step.title}
+            key={step.id}
             initial={{ opacity: 0, y: 18 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.3 }}
@@ -72,7 +107,6 @@ export default function ProcessSection() {
             >
               <span className="h-1.5 w-1.5 rounded-full bg-white" />
             </span>
-
             <div
               className="
                 rounded-2xl border border-slate-200/80 bg-white/70
@@ -83,21 +117,18 @@ export default function ProcessSection() {
               "
             >
               <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-slate-500 mb-1">
-                {step.label}
+                {lang === "en" ? step.labelEn : step.labelFr}
               </p>
-              <h3 className="text-base md:text-lg font-semibold text-slate-900 mb-2">
-                {step.title}
+              <h3 className="text-base md:text-lg font-semibold text-slate-900 mb-2 flex items-center gap-2">
+                <span aria-hidden className="text-lg">
+                  {step.icon}
+                </span>
+                <span>{lang === "en" ? step.titleEn : step.titleFr}</span>
               </h3>
               <p className="text-sm text-slate-600 leading-relaxed">
-                {step.body}
+                {lang === "en" ? step.bodyEn : step.bodyFr}
               </p>
             </div>
-
-            {index === 0 && (
-              <p className="mt-2 text-xs text-slate-500">
-                Généralement en visio ou autour d’un bon café.
-              </p>
-            )}
           </motion.li>
         ))}
       </ol>

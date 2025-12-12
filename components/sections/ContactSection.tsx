@@ -9,8 +9,69 @@ type ContactSectionProps = {
 export default function ContactSection({
   email = "hello@votrenom.dev",
 }: ContactSectionProps) {
+  // TODO: brancher sur ta logique globale de langue
+  const lang: "en" | "fr" = "en";
+
+  const t = {
+    en: {
+      kicker: "Contact",
+      titleLine1: "A project, an idea,",
+      titleLine2: "or just a question.",
+      nameLabel: "Name",
+      namePlaceholder: "Your first name or full name",
+      emailLabel: "E-mail",
+      emailPlaceholder: "you@email.com",
+      projectLabel: "Project",
+      projectPlaceholder: "Redesign, marketing site, creative experiment…",
+      messageLabel: "Message",
+      messagePlaceholder:
+        "Tell me a bit about your context, timeline and budget…",
+      submit: "Send the message",
+      mailAltPrefix: "or write to me directly at",
+      rightTitle: "What happens after your message?",
+      rightP1:
+        "I read your message, look at your refs and make sure I’m a good fit for the project.",
+      rightP2:
+        "If it makes sense, I come back with 1–2 options and a few questions. You’ll usually get a reply within 48 hours.",
+      rightListIntro: "I mostly work with:",
+      rightItem1: "creative studios and independents",
+      rightItem2: "brands that care about their online presence",
+      rightItem3: "personal projects with a strong personality",
+      submitIcon: "↗",
+    },
+    fr: {
+      kicker: "Contact",
+      titleLine1: "Un projet, une idée,",
+      titleLine2: "ou juste une question à poser.",
+      intro:
+        "Explique-moi en quelques lignes ce que tu as en tête : une ref, un mood, un problème à résoudre. Je reviens vers toi avec des pistes concrètes.",
+      nameLabel: "Nom",
+      namePlaceholder: "Ton prénom ou ton nom",
+      emailLabel: "E-mail",
+      emailPlaceholder: "ton@email.com",
+      projectLabel: "Projet",
+      projectPlaceholder: "Refonte, site vitrine, expérimentation créative…",
+      messageLabel: "Message",
+      messagePlaceholder:
+        "Parle-moi un peu de ton contexte, de tes délais, de ton budget…",
+      submit: "Envoyer le message",
+      mailAltPrefix: "ou m’écrire directement sur",
+      rightTitle: "Comment ça se passe après ton message ?",
+      rightP1:
+        "Je lis ton message, je regarde tes refs s’il y en a et je vérifie que je suis la bonne personne pour ton projet.",
+      rightP2:
+        "Si ça colle, je reviens vers toi avec 1–2 directions possibles et quelques questions. Tu as généralement une réponse sous 48 h.",
+      rightListIntro: "Je travaille principalement avec :",
+      rightItem1: "studios créatifs et indépendants",
+      rightItem2: "marques qui veulent soigner leur présence en ligne",
+      rightItem3: "projets perso avec une forte identité",
+      submitIcon: "↗",
+    },
+  }[lang];
+
   return (
     <section aria-labelledby="contact-title">
+      {/* En-tête */}
       <motion.div
         initial={{ opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -19,23 +80,20 @@ export default function ContactSection({
         className="text-center mb-10 space-y-4"
       >
         <p className="text-sm font-medium tracking-wide text-slate-500 uppercase">
-          Contact
+          {t.kicker}
         </p>
         <h2
           id="contact-title"
           className="text-3xl md:text-4xl font-semibold tracking-tight text-slate-900"
         >
-          Un projet, une idée,
+          {t.titleLine1}
           <span className="block text-slate-500 text-lg mt-3 font-normal">
-            ou juste une question à poser.
+            {t.titleLine2}
           </span>
         </h2>
-        <p className="max-w-xl mx-auto text-sm md:text-base text-slate-600 leading-relaxed">
-          Raconte-moi ce que tu as en tête : une ref, un mood, un problème à résoudre. 
-          Je reviens vers toi rapidement avec des pistes concrètes.
-        </p>
       </motion.div>
 
+      {/* Grille formulaire + bloc texte */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -64,7 +122,7 @@ export default function ContactSection({
                   htmlFor="name"
                   className="block text-xs font-medium uppercase tracking-[0.16em] text-slate-500 mb-1.5"
                 >
-                  Nom
+                  {t.nameLabel}
                 </label>
                 <input
                   id="name"
@@ -76,7 +134,7 @@ export default function ContactSection({
                     px-3 py-2.5 text-sm text-slate-900
                     outline-none focus:border-slate-900 focus:ring-0
                   "
-                  placeholder="Ton prénom ou ton nom"
+                  placeholder={t.namePlaceholder}
                 />
               </div>
               <div className="text-left">
@@ -84,7 +142,7 @@ export default function ContactSection({
                   htmlFor="email"
                   className="block text-xs font-medium uppercase tracking-[0.16em] text-slate-500 mb-1.5"
                 >
-                  E-mail
+                  {t.emailLabel}
                 </label>
                 <input
                   id="email"
@@ -97,7 +155,7 @@ export default function ContactSection({
                     px-3 py-2.5 text-sm text-slate-900
                     outline-none focus:border-slate-900 focus:ring-0
                   "
-                  placeholder="ton@email.com"
+                  placeholder={t.emailPlaceholder}
                 />
               </div>
             </div>
@@ -107,7 +165,7 @@ export default function ContactSection({
                 htmlFor="project"
                 className="block text-xs font-medium uppercase tracking-[0.16em] text-slate-500 mb-1.5"
               >
-                Projet
+                {t.projectLabel}
               </label>
               <input
                 id="project"
@@ -118,7 +176,7 @@ export default function ContactSection({
                   px-3 py-2.5 text-sm text-slate-900
                   outline-none focus:border-slate-900 focus:ring-0
                 "
-                placeholder="Refonte, site vitrine, expérimentation créative…"
+                placeholder={t.projectPlaceholder}
               />
             </div>
 
@@ -127,7 +185,7 @@ export default function ContactSection({
                 htmlFor="message"
                 className="block text-xs font-medium uppercase tracking-[0.16em] text-slate-500 mb-1.5"
               >
-                Message
+                {t.messageLabel}
               </label>
               <textarea
                 id="message"
@@ -139,35 +197,43 @@ export default function ContactSection({
                   outline-none focus:border-slate-900 focus:ring-0
                   resize-none
                 "
-                placeholder="Parle-moi un peu de ton contexte, de tes délais, de ton budget…"
+                placeholder={t.messagePlaceholder}
               />
             </div>
 
-            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between pt-2">
-              <button
-                type="submit"
-                className="
-                  inline-flex items-center justify-center gap-2
-                  rounded-full bg-slate-900 text-white text-sm font-medium
-                  px-5 py-2.5
-                  hover:bg-slate-800 transition
-                "
-              >
-                Envoyer le message
-                <span className="text-base" aria-hidden>
-                  ↗
-                </span>
-              </button>
-
-              <a
-                href={`mailto:${email}`}
-                className="
-                  text-xs text-slate-500 hover:text-slate-700
-                  underline-offset-2 hover:underline
-                "
-              >
-                ou m’écrire directement sur {email}
-              </a>
+            {/* Bouton + lien email : même espace, centrés */}
+            <div className="pt-3 grid gap-3 sm:grid-cols-2 sm:items-center">
+              <div className="flex justify-center">
+                <button
+                  type="submit"
+                  className="
+                    inline-flex items-center justify-center gap-2
+                    rounded-full bg-slate-900 text-white text-sm font-medium
+                    px-5 py-2.5
+                    hover:bg-slate-800 transition
+                  "
+                >
+                  {t.submit}
+                  <span className="text-base" aria-hidden>
+                    {t.submitIcon}
+                  </span>
+                </button>
+              </div>
+              <div className="flex justify-center">
+                <a
+                  href={`mailto:${email}`}
+                  className="
+                    text-xs text-slate-500 hover:text-slate-700
+                    underline-offset-2 hover:underline
+                    text-center
+                  "
+                >
+                  {t.mailAltPrefix}{" "}
+                  <span className="font-medium text-slate-700">
+                    {email}
+                  </span>
+                </a>
+              </div>
             </div>
           </form>
         </div>
@@ -183,25 +249,23 @@ export default function ContactSection({
         >
           <div className="space-y-3">
             <h3 className="text-base md:text-lg font-semibold text-slate-900">
-              Comment ça se passe après ton message ?
+              {t.rightTitle}
             </h3>
+            <p className="leading-relaxed">{t.rightP1}</p>
             <p className="leading-relaxed">
-              Je lis ton message (vraiment), je regarde tes refs si tu en as,
-              puis je reviens vers toi avec quelques questions précises ou une
-              première proposition de direction.
-            </p>
-            <p className="leading-relaxed">
-              On peut ensuite prévoir un court call pour voir si le feeling est
-              bon et si je suis la bonne personne pour ton projet.
+              <span className="mr-1" aria-hidden>
+                ⏱
+              </span>
+              {t.rightP2}
             </p>
           </div>
 
           <div className="space-y-1 text-xs text-slate-500">
-            <p>Je travaille principalement avec :</p>
-            <ul className="list-disc list-inside">
-              <li>studios créatifs et indépendants</li>
-              <li>marques qui veulent soigner leur présence en ligne</li>
-              <li>projets perso un peu fous, quand le timing s’y prête</li>
+            <p>{t.rightListIntro}</p>
+            <ul className="list-disc list-inside space-y-0.5">
+              <li>{t.rightItem1}</li>
+              <li>{t.rightItem2}</li>
+              <li>{t.rightItem3}</li>
             </ul>
           </div>
         </div>
