@@ -51,11 +51,11 @@ export default function ProcessSection() {
   const ui = {
     en: {
       kicker: "Process",
-      title: "A simple 4-step flow",
+      title: "4-step flow",
     },
     fr: {
       kicker: "Process",
-      title: "Un parcours simple en 4 étapes",
+      title: "En 4 étapes",
     },
   }[lang];
 
@@ -80,57 +80,84 @@ export default function ProcessSection() {
         </h2>
       </motion.div>
 
-      {/* Timeline */}
+      {/* Cartes de process */}
       <ol
         className="
-          relative
-          max-w-3xl mx-auto pl-5 border-l border-slate-200 space-y-8
-          md:max-w-4xl md:grid md:grid-cols-2 md:gap-6 md:space-y-0
+          max-w-5xl mx-auto
+          grid gap-6
+          grid-cols-1 sm:grid-cols-2 lg:grid-cols-4
+          list-none
         "
       >
-        <div className="pointer-events-none absolute left-0 top-0 h-full w-px bg-gradient-to-b from-violet-500/60 via-fuchsia-500/40 to-amber-400/50" />
-        {steps.map((step) => (
-          <motion.li
-            key={step.id}
-            initial={{ opacity: 0, y: 18 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.4, ease: "easeOut" }}
-            className="relative pl-4"
-          >
-            <span
-              className="
-                absolute -left-[9px] top-2 flex h-4 w-4 items-center justify-center
-                rounded-full border border-white bg-slate-900
-                ring-2 ring-violet-400/60
-              "
-            >
-              <span className="h-1.5 w-1.5 rounded-full bg-white" />
-            </span>
-            <div
-              className="
-                rounded-2xl border border-slate-200/80 bg-white/70
-                backdrop-blur-md shadow-sm
-                px-4 py-4 md:px-5 md:py-5
-                transition-transform duration-300
-                hover:-translate-y-1 hover:shadow-lg
-              "
-            >
-              <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-slate-500 mb-1">
-                {lang === "en" ? step.labelEn : step.labelFr}
-              </p>
-              <h3 className="text-base md:text-lg font-semibold text-slate-900 mb-2 flex items-center gap-2">
-                <span aria-hidden className="text-lg">
-                  {step.icon}
-                </span>
-                <span>{lang === "en" ? step.titleEn : step.titleFr}</span>
-              </h3>
-              <p className="text-sm text-slate-600 leading-relaxed">
-                {lang === "en" ? step.bodyEn : step.bodyFr}
-              </p>
-            </div>
-          </motion.li>
-        ))}
+        {steps.map((step, index) => {
+          const label = lang === "en" ? step.labelEn : step.labelFr;
+          const title = lang === "en" ? step.titleEn : step.titleFr;
+          const body = lang === "en" ? step.bodyEn : step.bodyFr;
+
+          return (
+            <li key={step.id} className="relative">
+              {/* Carte + animation de flottement */}
+              <motion.div
+                initial={{ opacity: 0, y: 24, scale: 0.97 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                viewport={{ once: true, amount: 0.4 }}
+                transition={{
+                  duration: 0.5,
+                  ease: "easeOut",
+                  delay: index * 0.08,
+                }}
+              >
+                <motion.div
+                  className="
+                    h-full
+                    rounded-3xl border border-slate-200/80 bg-white/80
+                    backdrop-blur-md shadow-sm
+                    px-4 py-5 md:px-5 md:py-6
+                    flex flex-col gap-3
+                  "
+                  // flottement en boucle : elles se soulèvent une à une
+                  animate={{
+                    y: [0, -8, 0],
+                    boxShadow: [
+                      "0 12px 25px rgba(15,23,42,0.05)",
+                      "0 20px 40px rgba(15,23,42,0.16)",
+                      "0 12px 25px rgba(15,23,42,0.05)",
+                    ],
+                  }}
+                  transition={{
+                    duration: 4,
+                    repeat: Infinity,
+                    delay: index * 0.5,
+                    ease: "easeInOut",
+                  }}
+                  whileHover={{
+                    y: -14,
+                    boxShadow: "0 26px 50px rgba(15,23,42,0.28)",
+                    transition: { duration: 0.22 },
+                  }}
+                >
+                  <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-slate-500 flex items-center gap-2">
+                    <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-slate-900 text-[11px] text-white">
+                      {step.id.toString().padStart(2, "0")}
+                    </span>
+                    <span>{label}</span>
+                  </p>
+
+                  <h3 className="text-base md:text-lg font-semibold text-slate-900 flex items-center gap-2">
+                    <span aria-hidden className="text-lg">
+                      {step.icon}
+                    </span>
+                    <span>{title}</span>
+                  </h3>
+
+                  <p className="text-sm text-slate-600 leading-relaxed">
+                    {body}
+                  </p>
+                </motion.div>
+              </motion.div>
+            </li>
+          );
+        })}
       </ol>
     </section>
   );

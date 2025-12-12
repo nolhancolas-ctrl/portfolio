@@ -1,16 +1,25 @@
 "use client";
-
 import { useEffect, useState } from "react";
 
 export default function Header() {
   // On part de true : au chargement, le hero est en vue, donc le header est caché
   const [isHeroInView, setIsHeroInView] = useState(true);
 
+  // Langue locale (à brancher plus tard sur ta logique globale si tu veux)
+  const lang: "en" | "fr" = "en";
+  const t = {
+    en: {
+      cta: "Contact me",
+    },
+    fr: {
+      cta: "Me contacter",
+    },
+  }[lang];
+
   // Observer la section #hero
   useEffect(() => {
     const hero = document.getElementById("hero");
     if (!hero) return;
-
     const observer = new IntersectionObserver(
       (entries) => {
         const entry = entries[0];
@@ -20,7 +29,6 @@ export default function Header() {
         threshold: 0.3, // "en vue" quand ~30% du hero est visible
       }
     );
-
     observer.observe(hero);
     return () => observer.disconnect();
   }, []);
@@ -60,7 +68,7 @@ export default function Header() {
             hover:bg-slate-100 transition
           "
         >
-          Me contacter
+          {t.cta}
         </a>
       </div>
     </header>

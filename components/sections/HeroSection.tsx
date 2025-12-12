@@ -123,10 +123,10 @@ export default function HeroSection() {
           transition={{ delay: 0.45, duration: 0.7 }}
           className="flex items-center justify-center gap-4 mb-14"
         >
-          <a className="px-6 py-3 rounded-full bg-slate-900 text-white font-medium hover:bg-slate-800 transition">
+          <a href="#project" className="px-6 py-3 rounded-full bg-slate-900 text-white font-medium hover:bg-slate-800 transition">
             {t.ctaProjects}
           </a>
-          <a className="px-6 py-3 rounded-full border border-slate-300 font-medium hover:bg-slate-100 transition">
+          <a href="#contact" className="px-6 py-3 rounded-full border border-slate-300 font-medium hover:bg-slate-100 transition">
             {t.ctaContact}
           </a>
         </motion.div>

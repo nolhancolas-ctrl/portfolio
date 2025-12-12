@@ -5,6 +5,8 @@ import ProcessSection from "@/components/sections/ProcessSection";
 import ServicesSection from "@/components/sections/ServicesSection";
 import ContactSection from "@/components/sections/ContactSection";
 import PageSection from "@/components/layout/PageSection";
+import FaqSection from "@/components/sections/FaqSection";
+import PricingSection from "@/components/sections/PricingSection";
 
 export default function Page() {
   return (
@@ -18,10 +20,6 @@ export default function Page() {
       </PageSection>
 
       <PageSection>
-        <ProjectsSection />
-      </PageSection>
-
-      <PageSection>
         <ProcessSection />
       </PageSection>
 
@@ -29,8 +27,20 @@ export default function Page() {
         <ServicesSection />
       </PageSection>
 
-      <PageSection id="contact" className="pb-32">
+      <PageSection>
+        <PricingSection />
+      </PageSection>
+
+      <PageSection id="project">
+        <ProjectsSection />
+      </PageSection>
+
+      <PageSection id="contact" className="pb-18">
         <ContactSection />
+      </PageSection>
+
+      <PageSection id="project">
+        <FaqSection />
       </PageSection>
     </>
   );

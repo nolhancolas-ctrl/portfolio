@@ -1,25 +1,51 @@
 import React from "react";
+
 type FooterProps = {
   className?: string;
   email?: string;
 };
+
 export default function Footer({
   className = "",
-  email = "hello@votrenom.dev",
+  email = "nolhan.colas@gmail.com",
 }: FooterProps) {
   const year = new Date().getFullYear();
-  const t = {
-    contactTitle: "Un projet, une idée ? 💬",
-    contactCTA: "M’écrire",
-    elsewhereTitle: "Ailleurs sur le web 🌍",
-    github: "GitHub",
-    linkedin: "LinkedIn",
-    aboutTitle: "À propos 👋",
-    aboutText: `Ingénieur diplômé de CentraleSupélec, j’ai passé plusieurs années chez Alpine Cars à concevoir et développer des interfaces web.
 
-Aujourd’hui, je crée des sites modernes et efficaces, dans une grande variété de languages.`,
-    rights: "Tous droits réservés.",
-  };
+  // TODO: brancher sur ta logique globale de langue
+  const lang: "en" | "fr" = "en";
+
+  const t = {
+    en: {
+      contactTitle: "A project, an idea? 💬",
+      contactCTA: "Email me",
+      elsewhereTitle: "Elsewhere on the web 🌍",
+      github: "GitHub",
+      linkedin: "LinkedIn",
+      aboutTitle: "About 👋",
+      aboutText: `Engineer graduated from CentraleSupélec, I spent several years at Alpine Cars designing and building web interfaces.
+Today, I create modern, efficient websites in a wide range of technologies.`,
+      rights: "All rights reserved.",
+      mailAria: "Send me an email",
+    },
+    fr: {
+      contactTitle: "Un projet, une idée ? 💬",
+      contactCTA: "M’écrire",
+      elsewhereTitle: "Ailleurs sur le web 🌍",
+      github: "GitHub",
+      linkedin: "LinkedIn",
+      aboutTitle: "À propos 👋",
+      aboutText: `Ingénieur diplômé de CentraleSupélec, j’ai passé plusieurs années chez Alpine Cars à concevoir et développer des interfaces web.
+Aujourd’hui, je crée des sites modernes et efficaces, dans une grande variété de langages.`,
+      rights: "Tous droits réservés.",
+      mailAria: "Envoyer un mail",
+    },
+  }[lang];
+
+  // Lien Gmail (ouvre une fenêtre de composition Gmail vers ton adresse)
+  const gmailHref = `https://mail.google.com/mail/?view=cm&to=${encodeURIComponent(
+    email
+  )}`;
+
   return (
     <footer
       data-site-footer
@@ -33,6 +59,7 @@ Aujourd’hui, je crée des sites modernes et efficaces, dans une grande variét
     >
       {/* Séparateur haut */}
       <div className="absolute top-0 left-5 right-5 h-px bg-black/10 rounded-full" />
+
       <div
         className="
           mx-auto max-w-6xl px-6 sm:px-10 lg:px-14
@@ -57,8 +84,10 @@ Aujourd’hui, je crée des sites modernes et efficaces, dans une grande variét
               {t.contactTitle}
             </h3>
             <a
-              href={`mailto:${email}`}
-              aria-label="Envoyer un mail"
+              href={gmailHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={t.mailAria}
               className="
                 inline-flex items-center justify-center gap-2
                 rounded-full border border-black/10 bg-white/90 shadow-sm
@@ -88,6 +117,7 @@ Aujourd’hui, je crée des sites modernes et efficaces, dans une grande variét
               </span>
             </a>
           </section>
+
           {/* 2️⃣ Ailleurs */}
           <section
             className="
@@ -101,7 +131,7 @@ Aujourd’hui, je crée des sites modernes et efficaces, dans une grande variét
             </h3>
             <div className="flex flex-wrap justify-center gap-2">
               <a
-                href="https://github.com/ton-github"
+                href="https://github.com/nolhancolas-ctrl"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="
@@ -117,7 +147,7 @@ Aujourd’hui, je crée des sites modernes et efficaces, dans une grande variét
                 {t.github}
               </a>
               <a
-                href="https://www.linkedin.com/in/ton-linkedin"
+                href="https://www.linkedin.com/in/nolhan-colas-90394121b?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="
@@ -134,6 +164,7 @@ Aujourd’hui, je crée des sites modernes et efficaces, dans une grande variét
               </a>
             </div>
           </section>
+
           {/* 3️⃣ About */}
           <section
             className="
@@ -154,9 +185,10 @@ Aujourd’hui, je crée des sites modernes et efficaces, dans une grande variét
             </p>
           </section>
         </div>
+
         {/* Bas de page */}
         <div className="mt-8 pt-2 w-full flex items-center justify-center text-center text-xs text-slate-600">
-          © {year} votrenom.dev. {t.rights}
+          © {year} nolhan.dev. {t.rights}
         </div>
       </div>
     </footer>
