@@ -9,7 +9,6 @@ const LINKS = [
   { id: "hero", key: "hero", labelEn: "Intro", labelFr: "Intro" },
   { id: "styles", key: "styles", labelEn: "Styles", labelFr: "Styles" },
   { id: "process", key: "process", labelEn: "Process", labelFr: "Process" },
-  { id: "services", key: "services", labelEn: "Services", labelFr: "Services" },
   { id: "pricing", key: "pricing", labelEn: "Pricing", labelFr: "Tarifs" },
   { id: "design", key: "design", labelEn: "Designs", labelFr: "Designs" },
   { id: "modules", key: "modules", labelEn: "Modules", labelFr: "Modules" },

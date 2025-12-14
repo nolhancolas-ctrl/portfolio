@@ -2,7 +2,6 @@ import HeroSection from "@/components/sections/HeroSection";
 import StyleCarouselSection from "@/components/sections/StyleCarouselSection";
 import ProjectsSection from "@/components/sections/ProjectsSection";
 import ProcessSection from "@/components/sections/ProcessSection";
-import ServicesSection from "@/components/sections/ServicesSection";
 import ContactSection from "@/components/sections/ContactSection";
 import PageSection from "@/components/layout/PageSection";
 import FaqSection from "@/components/sections/FaqSection";
@@ -25,10 +24,6 @@ export default function Page() {
 
       <PageSection id="process">
         <ProcessSection />
-      </PageSection>
-
-      <PageSection id="services">
-        <ServicesSection />
       </PageSection>
 
       <PageSection id="pricing">

@@ -1,120 +1,266 @@
+// @ts-nocheck
+/* eslint-disable react/no-unknown-property */
 "use client";
-
 import { motion } from "framer-motion";
+import { Canvas, useFrame } from "@react-three/fiber";
+import { Environment } from "@react-three/drei";
+import { useRef } from "react";
+import * as THREE from "three";
 import { useLang } from "@/hooks/useLang";
 
+const services = [
+  {
+    id: 1,
+    titleEn: "Essential site refresh",
+    titleFr: "Refonte rapide, simple, efficace",
+    pointsEn: [
+      "Clean one-page or small marketing site.",
+      "Based on your existing content and structure.",
+      "Responsive, fast and easy to maintain.",
+    ],
+    pointsFr: [
+      "Site vitrine ou landing page claire et moderne.",
+      "Appuyée sur votre contenu et structure existants.",
+      "Responsive, rapide et simple à faire vivre.",
+    ],
+    fromEn: "Starting from €900",
+    fromFr: "À partir de 900 €",
+    timelineEn: "Kickoff within 3 days.",
+    timelineFr: "Démarrage sous 3 jours.",
+    icon: "⚡️",
+  },
+  {
+    id: 2,
+    titleEn: "Premium product experience",
+    titleFr: "Expérience produit premium",
+    pointsEn: [
+      "Custom sections and advanced interactive modules.",
+      "Smooth animations, graphs and rich content.",
+      "Designed to support growth and conversions.",
+    ],
+    pointsFr: [
+      "Sections sur-mesure et modules interactifs avancés.",
+      "Animations, graphiques et contenu riche.",
+      "Pensé pour soutenir la croissance et la conversion.",
+    ],
+    fromEn: "Starting from €1,800",
+    fromFr: "À partir de 1 800 €",
+    timelineEn: "Ideal for launches in 2–4 weeks.",
+    timelineFr: "Idéal pour un lancement sous 2 à 4 semaines.",
+    icon: "✨",
+  },
+  {
+    id: 3,
+    titleEn: "Brand & digital identity",
+    titleFr: "Identité visuelle & croissance",
+    pointsEn: [
+      "New visual direction for your brand online.",
+      "Signature hero, layout system and components.",
+      "Ongoing support as a growth partner.",
+    ],
+    pointsFr: [
+      "Nouvelle direction visuelle pour votre présence en ligne.",
+      "Hero signature, système de layout et composants.",
+      "Accompagnement dans la durée comme partenaire croissance.",
+    ],
+    fromEn: "Starting from €2,400",
+    fromFr: "À partir de 2 400 €",
+    timelineEn: "Multi-step collaboration over several weeks.",
+    timelineFr: "Collaboration en plusieurs étapes sur plusieurs semaines.",
+    icon: "🤝",
+  },
+];
 
-type Lang = "en" | "fr";
+/* ---------- Formes 3D argentées par carte ---------- */
+type Bounds = {
+  xCenter: number;
+  xRange: number;
+  yCenter: number;
+  yRange: number;
+  zCenter: number;
+  zRange: number;
+};
 
-export default function PricingSection() {
+type MovingShapeProps = {
+  type: "icosa" | "knot" | "orb";
+  bounds: Bounds;
+  scale?: number;
+  speed?: number;
+  phase?: number;
+};
 
+function MovingShape({
+  type,
+  bounds,
+  scale = 1.2,
+  speed = 1,
+  phase = 0,
+}: MovingShapeProps) {
+  const group = useRef<THREE.Group>(null);
+
+  const materialProps: THREE.MeshStandardMaterialParameters = {
+    color: "#e5e7eb",
+    metalness: 0.97,
+    roughness: 0.16,
+    envMapIntensity: 1.2,
+    clearcoat: 0.7,
+    clearcoatRoughness: 0.25,
+  };
+
+  useFrame(({ clock }) => {
+    const t = clock.getElapsedTime() * speed + phase;
+
+    // Mouvement confiné dans un rectangle lié à la carte
+    const x =
+      bounds.xCenter + Math.sin(t * 0.8) * bounds.xRange;
+    const y =
+      bounds.yCenter + Math.sin(t * 0.9) * bounds.yRange;
+    const z =
+      bounds.zCenter + Math.cos(t * 0.7) * bounds.zRange;
+
+    if (!group.current) return;
+    group.current.position.set(x, y, z);
+    group.current.rotation.x += 0.01 * speed;
+    group.current.rotation.y += 0.014 * speed;
+    group.current.rotation.z += 0.006 * speed;
+  });
+
+  return (
+    <group ref={group} scale={scale}>
+      {type === "icosa" && (
+        <mesh castShadow>
+          <icosahedronGeometry args={[1.3, 1]} />
+          <meshStandardMaterial {...materialProps} />
+        </mesh>
+      )}
+      {type === "knot" && (
+        <mesh castShadow>
+          <torusKnotGeometry args={[1.2, 0.33, 200, 22]} />
+          <meshStandardMaterial {...materialProps} />
+        </mesh>
+      )}
+      {type === "orb" && (
+        <group>
+          <mesh castShadow>
+            <sphereGeometry args={[1.4, 56, 56]} />
+            <meshStandardMaterial {...materialProps} />
+          </mesh>
+          <mesh rotation={[Math.PI / 2.6, 0.3, 0]}>
+            <torusGeometry args={[2, 0.09, 36, 140]} />
+            <meshStandardMaterial
+              color="#f9fafb"
+              metalness={0.9}
+              roughness={0.25}
+              envMapIntensity={1.4}
+            />
+          </mesh>
+        </group>
+      )}
+    </group>
+  );
+}
+
+function ServicesBackground3D() {
+  const cardBounds: Bounds[] = [
+    {
+      // carte de gauche
+      xCenter: -6,
+      xRange: 1.4,
+      yCenter: 0,
+      yRange: 1.6,
+      zCenter: -7,
+      zRange: 1.2,
+    },
+    {
+      // carte du milieu
+      xCenter: 0,
+      xRange: 1.5,
+      yCenter: 0,
+      yRange: 1.6,
+      zCenter: -7.2,
+      zRange: 1.3,
+    },
+    {
+      // carte de droite
+      xCenter: 6,
+      xRange: 1.4,
+      yCenter: 0,
+      yRange: 1.6,
+      zCenter: -7,
+      zRange: 1.2,
+    },
+  ];
+
+  return (
+    <div className="pointer-events-none absolute inset-0 -z-10 hidden md:block">
+      <Canvas
+        camera={{ position: [0, 0, 13], fov: 45 }}
+        shadows
+        gl={{
+          powerPreference: "high-performance",
+          antialias: true,
+          alpha: true,
+        }}
+      >
+        <ambientLight intensity={0.7} />
+        <directionalLight
+          position={[6, 8, 10]}
+          intensity={1.3}
+          castShadow
+          shadow-mapSize-width={1024}
+          shadow-mapSize-height={1024}
+        />
+        <directionalLight position={[-6, -4, -8]} intensity={0.5} />
+        <Environment preset="studio" />
+        {/* Une forme par carte */}
+        <MovingShape
+          type="icosa"
+          bounds={cardBounds[0]}
+          scale={1.15}
+          speed={1.05}
+          phase={0.4}
+        />
+        <MovingShape
+          type="knot"
+          bounds={cardBounds[1]}
+          scale={1.2}
+          speed={1.25}
+          phase={1.2}
+        />
+        <MovingShape
+          type="orb"
+          bounds={cardBounds[2]}
+          scale={1.25}
+          speed={0.95}
+          phase={2.1}
+        />
+      </Canvas>
+    </div>
+  );
+}
+
+/* ---------- Section Services + Pricing ---------- */
+export default function ServicesSection() {
   const { lang } = useLang();
-  
+
   const ui = {
     en: {
-      kicker: "Pricing",
-      title: "How I usually work on budget",
-      subtitle:
-        "Transparent ranges, then a precise quote once we know your scope.",
-      oneOffLabel: "One-off projects",
-      oneOffTagline: "Perfect for a clear scope: landing, site or product page.",
-      oneOffNote: "Custom quote starting from:",
-      monthlyLabel: "Monthly support",
-      monthlyTagline:
-        "For teams that ship often and need a front-end / motion partner.",
-      monthlyNote: "Flexible retainer starting from:",
-      currency: "€",
-      oneOffServicesTitle: "Typical project types",
-      monthlyServicesTitle: "What we do together",
-      oneOffServices: [
-        {
-          name: "Essential site / refresh",
-          desc: "Landing page or small site, modernised and clarified.",
-          from: 900,
-        },
-        {
-          name: "Premium product experience",
-          desc: "Richer layout, bespoke modules and polished interactions.",
-          from: 2400,
-        },
-        {
-          name: "Brand-led experience",
-          desc: "Custom storytelling, motion and advanced front-end.",
-          from: 3900,
-        },
-      ],
-      monthlyPlans: [
-        {
-          name: "Light",
-          desc: "1 day per month for fixes, small modules and polish.",
-          from: 600,
-        },
-        {
-          name: "Studio",
-          desc: "2–3 days per month for ongoing pages and experiments.",
-          from: 1200,
-        },
-      ],
-      disclaimer:
-        "All prices are indicative and refined after a short call and a written scope.",
-      ctaOneOff: "Book a call",
-      ctaMonthly: "Discuss a retainer",
+      kicker: "Services & pricing",
+      title: "Three ways to work together",
+      cta: "Book a call",
     },
     fr: {
-      kicker: "Tarifs",
-      title: "Comment je structure mes prix",
-      subtitle:
-        "Des fourchettes claires, puis un devis précis une fois le périmètre posé.",
-      oneOffLabel: "Projet unique",
-      oneOffTagline:
-        "Parfait pour un besoin défini : landing, site vitrine ou page produit.",
-      oneOffNote: "Sur devis à partir de :",
-      monthlyLabel: "Accompagnement mensuel",
-      monthlyTagline:
-        "Pour les équipes qui publient souvent et veulent un partenaire front / motion.",
-      monthlyNote: "Sur devis à partir de :",
-      currency: "€",
-      oneOffServicesTitle: "Types de projets fréquents",
-      monthlyServicesTitle: "Ce qu’on fait ensemble",
-      oneOffServices: [
-        {
-          name: "Site essentiel / refonte légère",
-          desc: "Landing ou petit site, remis au goût du jour et clarifié.",
-          from: 900,
-        },
-        {
-          name: "Expérience produit premium",
-          desc: "Mise en page plus riche, modules sur-mesure et interactions soignées.",
-          from: 2400,
-        },
-        {
-          name: "Expérience de marque complète",
-          desc: "Storytelling, motion et front-end avancé pour une présence forte.",
-          from: 3900,
-        },
-      ],
-      monthlyPlans: [
-        {
-          name: "Forfait léger",
-          desc: "1 jour par mois pour corrections, petits modules et finitions.",
-          from: 600,
-        },
-        {
-          name: "Mode studio",
-          desc: "2–3 jours par mois pour nouvelles pages et expérimentations.",
-          from: 1200,
-        },
-      ],
-      disclaimer:
-        "Ces montants sont indicatifs et adaptés après un court échange et un périmètre écrit.",
-      ctaOneOff: "Réserver un call",
-      ctaMonthly: "Parler d’un forfait",
+      kicker: "Offres & tarifs",
+      title: "3 façons de travailler ensemble",
+      cta: "Book a call",
     },
   }[lang];
 
   return (
-    <section aria-labelledby="pricing-title" className="relative">
-      {/* Header */}
+    <section aria-labelledby="services-title" className="relative">
+      <ServicesBackground3D />
+
+      {/* En-tête */}
       <motion.div
         initial={{ opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -126,198 +272,120 @@ export default function PricingSection() {
           {ui.kicker}
         </p>
         <h2
-          id="pricing-title"
+          id="services-title"
           className="text-3xl md:text-4xl font-semibold tracking-tight text-slate-900"
         >
           {ui.title}
-          <span className="block text-slate-500 text-lg mt-3 font-normal">
-            {ui.subtitle}
-          </span>
         </h2>
       </motion.div>
 
-      {/* 2 colonnes : one-off / monthly */}
-      <div className="grid gap-6 md:grid-cols-2 max-w-5xl mx-auto">
-        {/* One-off projects */}
-        <motion.article
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.5, ease: "easeOut" }}
-          className="
-            relative flex flex-col
-            rounded-3xl border border-slate-200/80 bg-white/75
-            backdrop-blur-md shadow-sm
-            px-6 py-7 md:px-7 md:py-8
-            overflow-hidden
-          "
-        >
-          {/* halo léger */}
-          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(129,140,248,0.14),transparent_55%),radial-gradient(circle_at_bottom_right,rgba(244,114,182,0.16),transparent_60%)]" />
-          <div className="relative flex flex-col gap-4">
-            <div className="flex items-center justify-between gap-3">
-              <div>
-                <p className="inline-flex items-center gap-2 rounded-full bg-slate-900 text-slate-50 text-[11px] font-medium px-3 py-1 uppercase tracking-[0.16em]">
-                  {ui.oneOffLabel}
-                </p>
-                <p className="mt-3 text-sm text-slate-600">
-                  {ui.oneOffTagline}
-                </p>
-              </div>
-              <div className="text-right">
-                <p className="text-xs text-slate-500">{ui.oneOffNote}</p>
-                <p className="text-2xl md:text-3xl font-semibold text-slate-900">
-                  {lang === "en" ? "€900" : "900 €"}
-                </p>
-              </div>
-            </div>
+      {/* Cartes */}
+      <div className="grid gap-6 md:grid-cols-3">
+        {services.map((service, index) => {
+          const title = lang === "en" ? service.titleEn : service.titleFr;
+          const points =
+            lang === "en" ? service.pointsEn : service.pointsFr;
+          const from =
+            lang === "en" ? service.fromEn : service.fromFr;
+          const timeline =
+            lang === "en" ? service.timelineEn : service.timelineFr;
 
-            <div className="mt-2">
-              <p className="text-xs font-medium uppercase tracking-[0.16em] text-slate-500 mb-2">
-                {ui.oneOffServicesTitle}
-              </p>
-              <ul className="space-y-3">
-                {ui.oneOffServices.map((service) => (
-                  <li
-                    key={service.name}
+          return (
+            <motion.article
+              key={service.id}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{
+                duration: 0.4,
+                ease: "easeOut",
+                delay: index * 0.06,
+              }}
+              className="
+                group relative flex flex-col
+                rounded-3xl border border-slate-200/75 bg-white/40
+                shadow-sm
+                px-5 py-6 md:px-6 md:py-7
+                overflow-hidden
+                transition-all duration-300
+                hover:-translate-y-1 hover:shadow-2xl
+              "
+            >
+              {/* halo au hover */}
+              <div
+                className="
+                  pointer-events-none absolute inset-0 opacity-0
+                  group-hover:opacity-100 transition-opacity duration-300
+                  bg-gradient-to-br from-violet-500/10 via-fuchsia-500/10 to-amber-400/10
+                "
+              />
+
+              {/* Titre centré */}
+              <div className="relative space-y-3">
+                <h3 className="text-lg md:text-xl font-semibold text-slate-900 text-center">
+                  {title}
+                </h3>
+              </div>
+
+              {/* Trois points designés */}
+              <div className="relative mt-5 space-y-3">
+                {points.map((point, i) => (
+                  <div
+                    key={point}
                     className="
-                      flex items-start justify-between gap-3
-                      rounded-2xl border border-slate-200/80 bg-white/80
-                      px-3 py-3
+                      flex items-start gap-3
+                      rounded-2xl bg-white/80 border border-slate-200/70
+                      px-3 py-2
                     "
                   >
-                    <div className="flex-1">
-                      <p className="text-[13px] font-semibold text-slate-900">
-                        {service.name}
-                      </p>
-                      <p className="text-[12px] text-slate-600 mt-0.5">
-                        {service.desc}
-                      </p>
+                    <div
+                      className="
+                        mt-0.5 flex h-6 w-6 items-center justify-center
+                        rounded-full bg-slate-900 text-[11px] font-semibold text-white
+                      "
+                    >
+                      {`0${i + 1}`}
                     </div>
-                    <div className="pl-2 text-right">
-                      <p className="text-[11px] text-slate-500">
-                        {lang === "en" ? "From" : "À partir de"}
-                      </p>
-                      <p className="text-sm font-semibold text-slate-900">
-                        {service.from.toLocaleString("fr-FR")} {ui.currency}
-                      </p>
-                    </div>
-                  </li>
+                    <p className="text-sm text-slate-700 leading-snug">
+                      {point}
+                    </p>
+                  </div>
                 ))}
-              </ul>
-            </div>
+              </div>
 
-            <div className="mt-4 flex items-center justify-between text-[11px] text-slate-500">
-              <p className="max-w-[70%]">
-                {ui.disclaimer}
-              </p>
-              <a
-                href="#contact"
-                className="
-                  inline-flex items-center justify-center gap-1
-                  rounded-full bg-slate-900 text-slate-50 px-3 py-1.5
-                  text-[11px] font-medium
-                  hover:bg-slate-800 transition
-                "
-              >
-                {ui.ctaOneOff}
-                <span aria-hidden>↗</span>
-              </a>
-            </div>
-          </div>
-        </motion.article>
+              {/* CTA + pricing */}
+              <div className="relative mt-6 space-y-2 flex flex-col items-center text-center">
+                <a
+                  href="#contact"
+                  className="
+                    inline-flex items-center justify-center gap-2
+                    rounded-full bg-slate-900 text-white text-sm font-medium
+                    px-4 py-2
+                    hover:bg-slate-800 transition
+                  "
+                >
+                  <span>{ui.cta}</span>
+                  <span aria-hidden>
+                    {service.icon}
+                  </span>
+                </a>
+                <div className="text-xs text-slate-600 space-y-0.5">
+                  <p className="font-medium">{from}</p>
+                  <p className="text-[11px] text-slate-500">
+                    {timeline}
+                  </p>
+                </div>
+              </div>
 
-        {/* Monthly support */}
-        <motion.article
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.5, ease: "easeOut", delay: 0.05 }}
-          className="
-            relative flex flex-col
-            rounded-3xl border border-slate-200/80 bg-white/75
-            backdrop-blur-md shadow-sm
-            px-6 py-7 md:px-7 md:py-8
-            overflow-hidden
-          "
-        >
-          {/* halo léger */}
-          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(45,212,191,0.14),transparent_55%),radial-gradient(circle_at_bottom,rgba(56,189,248,0.18),transparent_60%)]" />
-          <div className="relative flex flex-col gap-4">
-            <div className="flex items-center justify-between gap-3">
-              <div>
-                <p className="inline-flex items-center gap-2 rounded-full bg-slate-900 text-slate-50 text-[11px] font-medium px-3 py-1 uppercase tracking-[0.16em]">
-                  {ui.monthlyLabel}
-                </p>
-                <p className="mt-3 text-sm text-slate-600">
-                  {ui.monthlyTagline}
+              {/* numéro de service en bas à droite */}
+              <div className="relative mt-6 flex justify-end">
+                <p className="text-7xl md:text-7xl font-semibold text-slate-400/70 pb-1">
+                  {`0${service.id}`}
                 </p>
               </div>
-              <div className="text-right">
-                <p className="text-xs text-slate-500">{ui.monthlyNote}</p>
-                <p className="text-2xl md:text-3xl font-semibold text-slate-900">
-                  {lang === "en" ? "€600/mo" : "600 €/mois"}
-                </p>
-              </div>
-            </div>
-
-            <div className="mt-2">
-              <p className="text-xs font-medium uppercase tracking-[0.16em] text-slate-500 mb-2">
-                {ui.monthlyServicesTitle}
-              </p>
-              <ul className="space-y-3">
-                {ui.monthlyPlans.map((plan) => (
-                  <li
-                    key={plan.name}
-                    className="
-                      flex items-start justify-between gap-3
-                      rounded-2xl border border-slate-200/80 bg-white/80
-                      px-3 py-3
-                    "
-                  >
-                    <div className="flex-1">
-                      <p className="text-[13px] font-semibold text-slate-900">
-                        {plan.name}
-                      </p>
-                      <p className="text-[12px] text-slate-600 mt-0.5">
-                        {plan.desc}
-                      </p>
-                    </div>
-                    <div className="pl-2 text-right">
-                      <p className="text-[11px] text-slate-500">
-                        {lang === "en" ? "From" : "À partir de"}
-                      </p>
-                      <p className="text-sm font-semibold text-slate-900">
-                        {plan.from.toLocaleString("fr-FR")} {ui.currency}
-                        <span className="text-[11px] text-slate-500">
-                          {lang === "en" ? "/mo" : "/mois"}
-                        </span>
-                      </p>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="mt-4 flex items-center justify-between text-[11px] text-slate-500">
-              <p className="max-w-[70%]">
-                {ui.disclaimer}
-              </p>
-              <a
-                href="#contact"
-                className="
-                  inline-flex items-center justify-center gap-1
-                  rounded-full bg-slate-900 text-slate-50 px-3 py-1.5
-                  text-[11px] font-medium
-                  hover:bg-slate-800 transition
-                "
-              >
-                {ui.ctaMonthly}
-                <span aria-hidden>↗</span>
-              </a>
-            </div>
-          </div>
-        </motion.article>
+            </motion.article>
+          );
+        })}
       </div>
     </section>
   );
