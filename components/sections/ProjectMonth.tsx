@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useLang } from "@/hooks/useLang";
 
 type Lang = "en" | "fr";
 
@@ -8,7 +9,8 @@ const DAYS = Array.from({ length: 30 }, (_, i) => i + 1);
 const EVENT_DAYS = [2, 5, 9, 12, 16, 21, 24, 28];
 
 export default function ProjectMonth() {
-  const lang: Lang = "en";
+
+  const { lang } = useLang();
 
   const t = {
     en: {

@@ -1,12 +1,13 @@
 "use client";
 import { useEffect, useState } from "react";
+import { useLang } from "@/hooks/useLang";
 
 export default function Header() {
   // On part de true : au chargement, le hero est en vue, donc le header est caché
   const [isHeroInView, setIsHeroInView] = useState(true);
 
-  // Langue locale (à brancher plus tard sur ta logique globale si tu veux)
-  const lang: "en" | "fr" = "en";
+  const { lang } = useLang();
+
   const t = {
     en: {
       cta: "Contact me",

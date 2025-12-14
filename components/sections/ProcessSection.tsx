@@ -1,5 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
+import { useLang } from "@/hooks/useLang";
 
 const steps = [
   {
@@ -45,8 +46,8 @@ const steps = [
 ];
 
 export default function ProcessSection() {
-  // TODO: brancher sur ta logique globale de langue
-  const lang: "en" | "fr" = "en";
+
+  const { lang } = useLang();
 
   const ui = {
     en: {

@@ -1,13 +1,15 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useLang } from "@/hooks/useLang";
+
 
 type Lang = "en" | "fr";
 
 export default function PricingSection() {
-  // TODO: brancher sur ta logique globale de langue
-  const lang: Lang = "en";
 
+  const { lang } = useLang();
+  
   const ui = {
     en: {
       kicker: "Pricing",

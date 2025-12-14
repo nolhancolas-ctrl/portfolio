@@ -3,6 +3,7 @@ import { useRef } from "react";
 import { motion } from "framer-motion";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { EffectCoverflow, Mousewheel } from "swiper/modules";
+import { useLang } from "@/hooks/useLang";
 
 const STYLES = [
   {
@@ -81,8 +82,8 @@ const STYLES = [
 ];
 
 export default function StyleCarouselSection() {
-  // TODO: brancher sur ta logique globale de langue plus tard
-  const lang: "en" | "fr" = "en";
+  const { lang } = useLang();
+
   const ui = {
     en: {
       kicker: "Style explorer",
@@ -135,7 +136,6 @@ export default function StyleCarouselSection() {
     if (timeoutRef.current !== null) {
       window.clearTimeout(timeoutRef.current);
     }
-
     timeoutRef.current = window.setTimeout(() => {
       const defaults = defaultColorsRef.current;
       if (!defaults) return;
@@ -146,7 +146,7 @@ export default function StyleCarouselSection() {
   };
 
   return (
-    <section aria-labelledby="style-title" className="relative">
+    <section aria-labelledby="style-title" className="relative" id="styles">
       {/* Titre */}
       <motion.div
         initial={{ opacity: 0, y: 24 }}
@@ -231,6 +231,7 @@ export default function StyleCarouselSection() {
                     >
                       {/* overlay “plastique” */}
                       <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(255,255,255,0.25),transparent_40%,rgba(0,0,0,0.25))]" />
+
                       {/* contenu */}
                       <div className="relative flex-1 flex flex-col justify-between p-4 text-white">
                         <div className="space-y-1">
@@ -245,6 +246,7 @@ export default function StyleCarouselSection() {
                             {lang === "en" ? style.labelEn : style.labelFr}
                           </p>
                         </div>
+
                         {/* GROS "Clic !" centré */}
                         <div className="mt-4 flex items-center justify-center">
                           <div
@@ -260,6 +262,7 @@ export default function StyleCarouselSection() {
                             </span>
                           </div>
                         </div>
+
                         {/* Badge scroll en bas */}
                         <div className="mt-4 flex items-center justify-between text-[11px] text-white/80">
                           <span className="rounded-full bg-white/15 px-2 py-1">

@@ -1,4 +1,7 @@
+"use client";
+
 import React from "react";
+import { useLang } from "@/hooks/useLang";
 
 type FooterProps = {
   className?: string;
@@ -10,9 +13,7 @@ export default function Footer({
   email = "nolhan.colas@gmail.com",
 }: FooterProps) {
   const year = new Date().getFullYear();
-
-  // TODO: brancher sur ta logique globale de langue
-  const lang: "en" | "fr" = "en";
+  const { lang } = useLang();
 
   const t = {
     en: {
@@ -41,7 +42,6 @@ Aujourd’hui, je crée des sites modernes et efficaces, dans une grande variét
     },
   }[lang];
 
-  // Lien Gmail (ouvre une fenêtre de composition Gmail vers ton adresse)
   const gmailHref = `https://mail.google.com/mail/?view=cm&to=${encodeURIComponent(
     email
   )}`;
@@ -59,7 +59,6 @@ Aujourd’hui, je crée des sites modernes et efficaces, dans une grande variét
     >
       {/* Séparateur haut */}
       <div className="absolute top-0 left-5 right-5 h-px bg-black/10 rounded-full" />
-
       <div
         className="
           mx-auto max-w-6xl px-6 sm:px-10 lg:px-14

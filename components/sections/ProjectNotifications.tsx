@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useLang } from "@/hooks/useLang";
 
 type Lang = "en" | "fr";
 
@@ -49,7 +50,8 @@ const ITEMS: NotificationItem[] = [
 ];
 
 export default function ProjectNotifications() {
-  const lang: Lang = "en";
+
+  const { lang } = useLang();
 
   const t = {
     en: {

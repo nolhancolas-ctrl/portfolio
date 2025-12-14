@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { useLang } from "@/hooks/useLang";
 
 export type ProjectImage = {
   src: string;
@@ -13,13 +14,13 @@ type Props = {
 };
 
 export default function ProjectsClient({ images }: Props) {
-  // TODO: brancher sur ta logique globale de langue
-  const lang: "en" | "fr" = "en";
+
+  const { lang } = useLang();
 
   const t = {
     en: {
-      kicker: "Projects",
-      title: "Interfaces I can build for you",
+      kicker: "Modules",
+      title: "Interface modules I can build for you",
       subtitle:
         "Dashboards, products, mobile UIs and rich interactions.",
       analyticsTitle: "Product analytics dashboard",
@@ -34,8 +35,8 @@ export default function ProjectsClient({ images }: Props) {
       badgeLive: "Live demo",
     },
     fr: {
-      kicker: "Projets",
-      title: "Des interfaces que je peux concevoir",
+      kicker: "Modules",
+      title: "Des modules que je peux concevoir",
       subtitle:
         "Dashboards, produits, UI mobiles et interactions riches.",
       analyticsTitle: "Dashboard d’analytics produit",

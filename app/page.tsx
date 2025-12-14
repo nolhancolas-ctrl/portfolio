@@ -7,31 +7,39 @@ import ContactSection from "@/components/sections/ContactSection";
 import PageSection from "@/components/layout/PageSection";
 import FaqSection from "@/components/sections/FaqSection";
 import PricingSection from "@/components/sections/PricingSection";
+import DesignSection from "@/components/sections/DesignSection";
+import MainNavbar from "@/components/layout/MainNavbar";
 
 export default function Page() {
   return (
     <>
+      <MainNavbar />
+
       <PageSection id="hero">
         <HeroSection />
       </PageSection>
 
-      <PageSection>
+      <PageSection id="styles">
         <StyleCarouselSection />
       </PageSection>
 
-      <PageSection>
+      <PageSection id="process">
         <ProcessSection />
       </PageSection>
 
-      <PageSection>
+      <PageSection id="services">
         <ServicesSection />
       </PageSection>
 
-      <PageSection>
+      <PageSection id="pricing">
         <PricingSection />
       </PageSection>
 
-      <PageSection id="project">
+      <PageSection id="design">
+        <DesignSection />
+      </PageSection>
+
+      <PageSection id="modules">
         <ProjectsSection />
       </PageSection>
 
@@ -39,7 +47,7 @@ export default function Page() {
         <ContactSection />
       </PageSection>
 
-      <PageSection id="project">
+      <PageSection id="faq">
         <FaqSection />
       </PageSection>
     </>

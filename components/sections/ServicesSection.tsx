@@ -7,6 +7,7 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { Environment } from "@react-three/drei";
 import { useRef } from "react";
 import * as THREE from "three";
+import { useLang } from "@/hooks/useLang";
 
 const services = [
   {
@@ -57,7 +58,6 @@ const services = [
 ];
 
 /* ---------- Formes 3D argentées par carte ---------- */
-
 type Bounds = {
   xCenter: number;
   xRange: number;
@@ -97,16 +97,12 @@ function MovingShape({
     const t = clock.getElapsedTime() * speed + phase;
 
     // Mouvement confiné dans un rectangle lié à la carte
-    const x =
-      bounds.xCenter + Math.sin(t * 0.8) * bounds.xRange;
-    const y =
-      bounds.yCenter + Math.sin(t * 0.9) * bounds.yRange;
-    const z =
-      bounds.zCenter + Math.cos(t * 0.7) * bounds.zRange;
+    const x = bounds.xCenter + Math.sin(t * 0.8) * bounds.xRange;
+    const y = bounds.yCenter + Math.sin(t * 0.9) * bounds.yRange;
+    const z = bounds.zCenter + Math.cos(t * 0.7) * bounds.zRange;
 
     if (!group.current) return;
     group.current.position.set(x, y, z);
-
     group.current.rotation.x += 0.01 * speed;
     group.current.rotation.y += 0.014 * speed;
     group.current.rotation.z += 0.006 * speed;
@@ -232,10 +228,9 @@ function ServicesBackground3D() {
 }
 
 /* ---------- Section Services ---------- */
-
 export default function ServicesSection() {
-  // TODO: brancher sur ta logique globale de langue
-  const lang: "en" | "fr" = "en";
+  // 🌐 Langue branchée sur le contexte global
+  const { lang } = useLang();
 
   const ui = {
     en: {
@@ -275,8 +270,7 @@ export default function ServicesSection() {
       <div className="grid gap-6 md:grid-cols-3">
         {services.map((service, index) => {
           const title = lang === "en" ? service.titleEn : service.titleFr;
-          const points =
-            lang === "en" ? service.pointsEn : service.pointsFr;
+          const points = lang === "en" ? service.pointsEn : service.pointsFr;
 
           return (
             <motion.article
@@ -299,7 +293,6 @@ export default function ServicesSection() {
                 hover:-translate-y-1 hover:shadow-2xl
               "
             >
-
               {/* halo au hover */}
               <div
                 className="
@@ -348,7 +341,6 @@ export default function ServicesSection() {
                   {`0${service.id}`}
                 </p>
               </div>
-
             </motion.article>
           );
         })}

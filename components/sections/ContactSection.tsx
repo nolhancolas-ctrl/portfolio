@@ -1,16 +1,28 @@
 "use client";
-
 import { useEffect } from "react";
 import { motion } from "framer-motion";
+import { useLang } from "@/hooks/useLang";
 
 export default function ContactSection() {
+  const { lang } = useLang();
+
+  const t = {
+    en: {
+      kicker: "Contact",
+      title: "Book a call",
+    },
+    fr: {
+      kicker: "Contact",
+      title: "Réserver un appel",
+    },
+  }[lang];
+
   // Charge le script Calendly une seule fois côté client
   useEffect(() => {
     const existingScript = document.querySelector<HTMLScriptElement>(
       'script[src="https://assets.calendly.com/assets/external/widget.js"]'
     );
     if (existingScript) return;
-
     const script = document.createElement("script");
     script.src = "https://assets.calendly.com/assets/external/widget.js";
     script.async = true;
@@ -32,13 +44,13 @@ export default function ContactSection() {
         className="text-center mb-8 space-y-3"
       >
         <p className="text-sm font-medium tracking-wide text-slate-500 uppercase">
-          Contact
+          {t.kicker}
         </p>
         <h2
           id="contact-title"
           className="text-3xl md:text-4xl font-semibold tracking-tight text-slate-900"
         >
-          Book a call
+          {t.title}
         </h2>
       </motion.div>
 

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { useLang } from "@/hooks/useLang";
 
 type Lang = "en" | "fr";
 
@@ -54,8 +55,9 @@ const FAQ_ITEMS = [
 ];
 
 export default function FaqSection() {
-  // TODO: brancher sur ta logique globale de langue
-  const lang: Lang = "en";
+
+  const { lang } = useLang();
+
   const ui = {
     en: {
       kicker: "FAQ",
