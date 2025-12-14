@@ -7,11 +7,11 @@ type Lang = "en" | "fr";
 
 const LINKS = [
   { id: "hero", key: "hero", labelEn: "Intro", labelFr: "Intro" },
-  { id: "styles", key: "styles", labelEn: "Styles", labelFr: "Styles" },
   { id: "process", key: "process", labelEn: "Process", labelFr: "Process" },
-  { id: "pricing", key: "pricing", labelEn: "Pricing", labelFr: "Tarifs" },
   { id: "design", key: "design", labelEn: "Designs", labelFr: "Designs" },
   { id: "modules", key: "modules", labelEn: "Modules", labelFr: "Modules" },
+  { id: "styles", key: "styles", labelEn: "Styles", labelFr: "Styles" },
+  { id: "pricing", key: "pricing", labelEn: "Pricing", labelFr: "Tarifs" },
   { id: "faq", key: "faq", labelEn: "FAQ", labelFr: "FAQ" },
   { id: "contact", key: "contact", labelEn: "Contact", labelFr: "Contact" },
 ];
@@ -53,7 +53,7 @@ export default function MainNavbar() {
   return (
     <nav
       aria-label="Main navigation"
-      className="fixed top-4 right-4 z-50"
+      className="fixed sm:top-[22] top-6 right-4 z-50"
     >
       <div className="relative">
         {/* Bouton hamburger */}

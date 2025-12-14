@@ -72,13 +72,13 @@ export default function HeroSection() {
         >
           <a
             href="#project"
-            className="px-6 py-3 rounded-full bg-slate-900 text-white font-medium hover:bg-slate-800 transition"
+            className="px-6 py-3 rounded-full bg-slate-900 text-white font-medium hover:bg-slate-800 transition whitespace-nowrap"
           >
             {t.ctaProjects}
           </a>
           <a
             href="#contact"
-            className="px-6 py-3 rounded-full border border-slate-300 font-medium hover:bg-slate-100 transition"
+            className="px-6 py-3 rounded-full border border-slate-300 font-medium hover:bg-slate-100 transition whitespace-nowrap"
           >
             {t.ctaContact}
           </a>

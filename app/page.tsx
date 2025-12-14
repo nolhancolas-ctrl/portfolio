@@ -18,16 +18,8 @@ export default function Page() {
         <HeroSection />
       </PageSection>
 
-      <PageSection id="styles">
-        <StyleCarouselSection />
-      </PageSection>
-
       <PageSection id="process">
         <ProcessSection />
-      </PageSection>
-
-      <PageSection id="pricing">
-        <PricingSection />
       </PageSection>
 
       <PageSection id="design">
@@ -36,6 +28,14 @@ export default function Page() {
 
       <PageSection id="modules">
         <ProjectsSection />
+      </PageSection>
+
+      <PageSection id="styles">
+        <StyleCarouselSection />
+      </PageSection>
+
+      <PageSection id="pricing">
+        <PricingSection />
       </PageSection>
 
       <PageSection id="contact" className="pb-18">

@@ -40,7 +40,10 @@ export default function Header() {
   return (
     <header
       className={`
-        fixed top-4 left-1/2 -translate-x-1/2 z-50
+        fixed top-4 
+        left-4 md:left-1/2 
+        -translate-x-0 md:-translate-x-1/2
+        z-50
         transition-all duration-500
         ${
           visible
@@ -51,22 +54,32 @@ export default function Header() {
     >
       <div
         className="
-          px-6 py-3
+        w-full max-w-xs sm:max-w-none
+          px-3 py-1.5 sm:px-6 sm:py-3
           bg-white/20 backdrop-blur-xl
           border border-white/30
           rounded-full shadow-lg 
-          flex items-center gap-6
+          flex items-center gap-3 sm:gap-6
         "
       >
-        <span className="font-semibold text-slate-900">
+        <a
+          href="#hero"
+          className="
+            px-5 py-2 rounded-full
+            text-slate-900 font-medium 
+            hover:bg-black hover:text-white transition
+          "
+        >
           nolhan.dev
-        </span>
+        </a>
+
         <a
           href="#contact"
           className="
             px-5 py-2 rounded-full
             bg-white text-slate-900 font-medium 
-            hover:bg-slate-100 transition
+            hover:bg-black hover:text-white transition
+            whitespace-nowrap
           "
         >
           {t.cta}

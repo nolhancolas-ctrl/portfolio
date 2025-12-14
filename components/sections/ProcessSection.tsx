@@ -86,7 +86,7 @@ export default function ProcessSection() {
         className="
           max-w-5xl mx-auto
           grid gap-6
-          grid-cols-1 sm:grid-cols-2 lg:grid-cols-4
+          grid-cols-2 sm:grid-cols-2 lg:grid-cols-4
           list-none
         "
       >
